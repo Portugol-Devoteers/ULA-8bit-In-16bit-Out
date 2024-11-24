@@ -4,7 +4,8 @@ module get_absolute_value(input wire [7:0] n, output wire [7:0] out);
   not n_inst_1(inverted_n, n);
   rca_eight_bits rca_8_inst_1 (
     .a(inverted_n),
-    .b(8'b00000001), 
+    .b(8'b00000001),
+    .carry_in(1'b0), 
     .result(absolute_value)
   ); // Adiciona 1 
   

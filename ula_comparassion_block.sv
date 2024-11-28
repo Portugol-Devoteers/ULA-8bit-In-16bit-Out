@@ -31,15 +31,15 @@ module ula_eq(input zero_flag, output wire [15:0] out);
 endmodule
 
 module gte(input zero_flag, sign_flag, output wire out);
-  wire or_out;
-  or or_inst_0 (
-    or_out,
-    zero_flag,
+  wire not_out;
+   not not_inst_0 (
+    not_out,
     sign_flag
   );
-  not not_inst_0 (
+  or or_inst_0 (
     out,
-    or_out
+    zero_flag,
+    not_out
   );
 endmodule
 

@@ -6,8 +6,9 @@ module shifter (
     assign out = in << shift_amount; // Deslocamento lógico à esquerda
 endmodule
 
+// nao funciona, me virei sozinho fazendo todos os códigos e ninguem ajudou e nao deu tempo de terminar o divisor apenas
 module division_step (
-    input [7:0] partial_dividend,  // Dividendo parcial da etapa
+    input [7:0] partial_dividend,  
     input [7:0] b,            // Divisor
     input [2:0] shift_amount,       // Quantidade de deslocamento
     output [7:0] rest,     // Resto parcial para a próxima etapa
@@ -62,12 +63,21 @@ module divisor (
   wire [7:0] rest_7;
   wire [7:0] rest_8;
 
+  buf buf_inst_0(result[0], 1'b0);
+  buf buf_inst_1(result[1], 1'b0);
+  buf buf_inst_2(result[2], 1'b0);
+  buf buf_inst_3(result[3], 1'b0);
+  buf buf_inst_4(result[4], 1'b0);
+  buf buf_inst_5(result[5], 1'b0);
+  buf buf_inst_6(result[6], 1'b0);
+  buf buf_inst_7(result[7], 1'b0);
+
   division_step step_1_inst(
     .partial_dividend(a),
     .b(b),
     .shift_amount(3'b111),
     .rest(rest_1),
-    .result_bit(result[0])
+    .result_bit(result[7])
   );
 
   division_step step_2_inst(
@@ -75,7 +85,7 @@ module divisor (
     .b(b),
     .shift_amount(3'b110),
     .rest(rest_2),
-    .result_bit(result[1])
+    .result_bit(result[6])
   );
 
   division_step step_3_inst(
@@ -83,7 +93,7 @@ module divisor (
     .b(b),
     .shift_amount(3'b101),
     .rest(rest_3),
-    .result_bit(result[2])
+    .result_bit(result[5])
   );
 
   division_step step_4_inst(
@@ -91,7 +101,7 @@ module divisor (
     .b(b),
     .shift_amount(3'b100),
     .rest(rest_4),
-    .result_bit(result[3])
+    .result_bit(result[4])
   );
 
   division_step step_5_inst(
@@ -99,7 +109,7 @@ module divisor (
     .b(b),
     .shift_amount(3'b011),
     .rest(rest_5),
-    .result_bit(result[4])
+    .result_bit(result[3])
   );
 
   division_step step_6_inst(
@@ -107,7 +117,7 @@ module divisor (
     .b(b),
     .shift_amount(3'b010),
     .rest(rest_6),
-    .result_bit(result[5])
+    .result_bit(result[2])
   );
 
   division_step step_7_inst(
@@ -115,7 +125,7 @@ module divisor (
     .b(b),
     .shift_amount(3'b001),
     .rest(rest_7),
-    .result_bit(result[6])
+    .result_bit(result[1])
   );
 
   division_step step_8_inst(
@@ -123,7 +133,7 @@ module divisor (
     .b(b),
     .shift_amount(3'b000),
     .rest(rest_8),
-    .result_bit(result[7])
+    .result_bit(result[0])
   );
 endmodule
 
@@ -149,7 +159,7 @@ module ula_divisor(
     .i0(temp_result_8),
     .out(temp_result_16)
   );
-  
+
   apply_signal apply_signal_inst_0 (
     .a(a), .b(b), .temp_result(temp_result_16), .result(result)
   );

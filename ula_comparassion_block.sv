@@ -61,15 +61,10 @@ endmodule
 module ula_lte(input zero_flag, sign_flag, output wire [15:0] out);
   wire result;
 
-  wire is_positve;
-  not not_inst_0 (
-    is_positve,
-    sign_flag
-  );
   or or_inst_0 (
     result,
     zero_flag,
-    is_positve
+    sign_flag
   );
 
   to_boolean to_boolean_inst_0 (

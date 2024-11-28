@@ -147,22 +147,20 @@ module rca_sixteen_bits(
   output wire [15:0] result,
   output wire carry_out
 );
-  wire carries_intermediary;
+  wire carry_out_0;
 
   rca_eight_bits rca_8_inst_0 (
     .a(a[7:0]),
     .b(b[7:0]),
     .carry_in(carry_in),
     .result(result[7:0]),
-    .carry_out(carries_intermediary)
+    .carry_out(carry_out_0)
   );
- wire carry_in_1;
- assign carry_in_1 = carries_intermediary;
 
   rca_eight_bits rca_8_inst_1 (
     .a(a[15:8]),
     .b(b[15:8]),
-    .carry_in(carry_in_1),
+    .carry_in(carry_out_0),
     .result(result[15:8]),
     .carry_out(carry_out)
   );
@@ -172,15 +170,22 @@ module extend_8_to_16(
   input wire [7:0] n,
   output wire [15:0] result
 );
-  assign result[7:0] = n;
-  assign result[8] = n[7];
-  assign result[9] = n[7];
-  assign result[10] = n[7];
-  assign result[11] = n[7];
-  assign result[12] = n[7];
-  assign result[13] = n[7];
-  assign result[14] = n[7];
-  assign result[15] = n[7];
+  buf buf_inst_0(result[0], n[0]);
+  buf buf_inst_1(result[1], n[1]);
+  buf buf_inst_2(result[2], n[2]);
+  buf buf_inst_3(result[3], n[3]);
+  buf buf_inst_4(result[4], n[4]);
+  buf buf_inst_5(result[5], n[5]);
+  buf buf_inst_6(result[6], n[6]);
+  buf buf_inst_7(result[7], n[7]);
+  buf buf_inst_8(result[8], n[7]);
+  buf buf_inst_9(result[9], n[7]);
+  buf buf_inst_10(result[10], n[7]);
+  buf buf_inst_11(result[11], n[7]);
+  buf buf_inst_12(result[12], n[7]);
+  buf buf_inst_13(result[13], n[7]);
+  buf buf_inst_14(result[14], n[7]);
+  buf buf_inst_15(result[15], n[7]);
 endmodule 
 
 module handle_b_by_operation (
@@ -190,9 +195,9 @@ module handle_b_by_operation (
 );
   wire [7:0] not_b, inverted_b;
 
-  not not_inst_0 (
-    not_b,
-    b
+  not_eight_bits not_inst_0 (
+    .i0(b),
+    .out(not_b)
   );
 
   rca_eight_bits rca_8_inst_0 (

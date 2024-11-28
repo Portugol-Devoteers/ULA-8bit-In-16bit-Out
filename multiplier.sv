@@ -18,7 +18,7 @@ module get_partial_products(
   and (p04, a[4], b[0]);
   and (p05, a[5], b[0]);
   and (p06, a[6], b[0]);
-  assign p07 = 1'b0;
+  buf buf_inst_0(p07, 1'b0);
 
   and (p10, a[0], b[1]);
   and (p11, a[1], b[1]);
@@ -27,7 +27,7 @@ module get_partial_products(
   and (p14, a[4], b[1]);
   and (p15, a[5], b[1]);
   and (p16, a[6], b[1]);
-  assign p17 = 1'b0;
+  buf buf_inst_1(p17, 1'b0);
 
   and (p20, a[0], b[2]);
   and (p21, a[1], b[2]);
@@ -36,7 +36,7 @@ module get_partial_products(
   and (p24, a[4], b[2]);
   and (p25, a[5], b[2]);
   and (p26, a[6], b[2]);
-  assign p27 = 1'b0;
+  buf buf_inst_2(p27, 1'b0);
 
   and (p30, a[0], b[3]);
   and (p31, a[1], b[3]);
@@ -45,7 +45,7 @@ module get_partial_products(
   and (p34, a[4], b[3]);
   and (p35, a[5], b[3]);
   and (p36, a[6], b[3]);
-  assign p37 = 1'b0;
+  buf buf_inst_3(p37, 1'b0);
 
   and (p40, a[0], b[4]);
   and (p41, a[1], b[4]);
@@ -54,7 +54,7 @@ module get_partial_products(
   and (p44, a[4], b[4]);
   and (p45, a[5], b[4]);
   and (p46, a[6], b[4]);
-  assign p47 = 1'b0;
+  buf buf_inst_4(p47, 1'b0);
 
   and (p50, a[0], b[5]);
   and (p51, a[1], b[5]);
@@ -63,7 +63,7 @@ module get_partial_products(
   and (p54, a[4], b[5]);
   and (p55, a[5], b[5]);
   and (p56, a[6], b[5]);
-  assign p57 = 1'b0;
+  buf buf_inst_5(p57, 1'b0);
 
   and (p60, a[0], b[6]);
   and (p61, a[1], b[6]);
@@ -72,16 +72,16 @@ module get_partial_products(
   and (p64, a[4], b[6]);
   and (p65, a[5], b[6]);
   and (p66, a[6], b[6]);
-  assign p67 = 1'b0;
+  buf buf_inst_6(p67, 1'b0);
 
-  assign p70 = 1'b0;
-  assign p71 = 1'b0;
-  assign p72 = 1'b0;
-  assign p73 = 1'b0;
-  assign p74 = 1'b0;
-  assign p75 = 1'b0;
-  assign p76 = 1'b0;
-  assign p77 = 1'b0;
+  buf buf_inst_7(p70, 1'b0);
+  buf buf_inst_8(p71, 1'b0);
+  buf buf_inst_9(p72, 1'b0);
+  buf buf_inst_10(p73, 1'b0);
+  buf buf_inst_11(p74, 1'b0);
+  buf buf_inst_12(p75, 1'b0);
+  buf buf_inst_13(p76, 1'b0);
+  buf buf_inst_14(p77, 1'b0);
 
 endmodule
 
@@ -116,7 +116,7 @@ module multiplier(
   wire s52, s53, s54, s55, s56, s57, s58, s59, s5_10;
 
   // Gerar os produtos parciais
-  get_partial_products gPP(
+  get_partial_products g_p_p_inst(
     .a(a), .b(b),
     .p00(result[0]), .p01(p01), .p02(p02), .p03(p03), .p04(p04), .p05(p05), .p06(p06), .p07(p07),
     .p10(p10), .p11(p11), .p12(p12), .p13(p13), .p14(p14), .p15(p15), .p16(p16), .p17(p17),
@@ -243,19 +243,48 @@ module multiplier(
   half_adder ha_inst_15 (.a(p77), .b(c38), .result(s5_10), .carry_out(c5_10));
  
   
-  wire [10:0] resultAdder;
-  wire [9:0] aS, bC;
+  wire [10:0] result_adder;
+  wire [9:0] a_s, b_c;
   
-  assign aS = {s5_10, s59, s58, s57, s56, s55, s54, s53, s52, s51};
-  assign bC = {c59, c58, c57, c56, c55, c54, c53, c52, c51, c50};
+  buf buf_inst_0(a_s[9], s5_10);
+  buf buf_inst_1(a_s[8], s59);
+  buf buf_inst_2(a_s[7], s58);
+  buf buf_inst_3(a_s[6], s57);
+  buf buf_inst_4(a_s[5], s56);
+  buf buf_inst_5(a_s[4], s55);
+  buf buf_inst_6(a_s[3], s54);
+  buf buf_inst_7(a_s[2], s53);
+  buf buf_inst_8(a_s[1], s52);
+  buf buf_inst_9(a_s[0], s51);
+  
+  buf buf_inst_10(b_c[9], c59);
+  buf buf_inst_11(b_c[8], c58);
+  buf buf_inst_12(b_c[7], c57);
+  buf buf_inst_13(b_c[6], c56);
+  buf buf_inst_14(b_c[5], c55);
+  buf buf_inst_15(b_c[4], c54);
+  buf buf_inst_16(b_c[3], c53);
+  buf buf_inst_17(b_c[2], c52);
+  buf buf_inst_18(b_c[1], c51);
+  buf buf_inst_19(b_c[0], c50);
 
   rca_ten_bits rca_10_inst_0 (
-    .a(aS),           
-    .b(bC),          
-    .result(resultAdder)
+    .a(a_s),           
+    .b(b_c),          
+    .result(result_adder)
   );
 
-  assign result[15:5] = resultAdder;
+  buf buf_inst_20_0(result[5], result_adder[0]);
+  buf buf_inst_20_1(result[6], result_adder[1]);
+  buf buf_inst_20_2(result[7], result_adder[2]);
+  buf buf_inst_20_3(result[8], result_adder[3]);
+  buf buf_inst_20_4(result[9], result_adder[4]);
+  buf buf_inst_20_5(result[10], result_adder[5]);
+  buf buf_inst_20_6(result[11], result_adder[6]);
+  buf buf_inst_20_7(result[12], result_adder[7]);
+  buf buf_inst_20_8(result[13], result_adder[8]);
+  buf buf_inst_20_9(result[14], result_adder[9]);
+  buf buf_inst_20_10(result[15], result_adder[10]);
 endmodule
 
 module ula_multiplier(
@@ -273,13 +302,9 @@ module ula_multiplier(
     .a(a_absolute), .b(b_absulute), .result(temp_result)
   );
 
-  wire result_signal;
-  xor xorSignal(result_signal, a[7], b[7]);
-
-  wire [15:0] negative_result;
-  to_two_complement to_two_c_inst_0(.n(temp_result), .out(negative_result));
-
-  mux_2_sixteen_bits mux_2_16_inst_0(.i0(temp_result), .i1(negative_result), .selector(result_signal), .out(result));
+  apply_signal apply_signal_inst_0 (
+    .a(a), .b(b), .temp_result(temp_result), .result(result)
+  );
 
   sign_flag sign_flag_inst_0 (
     .result(result),

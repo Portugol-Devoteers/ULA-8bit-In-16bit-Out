@@ -1,11 +1,9 @@
-module zero_flag (
-  input wire [15:0] result,
+module zero_flag_eight_bits (
+  input wire [7:0] result,
   output wire zero_flag
-);
-  wire or_out;
-  
-  or or_inst_0 (
-    or_out,
+);  
+  nor nor_inst_0 (
+    zero_flag,
     result[0],
     result[1],
     result[2],
@@ -13,20 +11,29 @@ module zero_flag (
     result[4],
     result[5],
     result[6],
-    result[7],
-    result[8],
-    result[9],
-    result[10],
-    result[11],
-    result[12],
-    result[13],
-    result[14],
-    result[15]
+    result[7]
+  );
+endmodule
+
+module zero_flag (
+  input wire [15:0] result,
+  output wire zero_flag
+);
+  wire result_0, result_1;
+  zero_flag_eight_bits zero_flag_eight_bits_inst_0 (
+    .result(result[7:0]),
+    .zero_flag(result_0)
   );
 
-  not not_inst_0 (
+  zero_flag_eight_bits zero_flag_eight_bits_inst_1 (
+    .result(result[15:8]),
+    .zero_flag(result_1)
+  );
+
+  and and_inst_0 (
     zero_flag,
-    or_out
+    result_0,
+    result_1
   );
 endmodule
 
@@ -34,5 +41,8 @@ module sign_flag (
   input wire [15:0] result,
   output wire sign_flag
 );  
-  assign sign_flag = result[15];
+  buf buf_inst_0 (
+    sign_flag,
+    result[15]
+  );
 endmodule
